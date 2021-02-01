@@ -84,10 +84,10 @@ namespace SkalProj_Datastrukturer_Minne
                 "String preceded by - removes that given string from it.\n" +
                 "In response you will know the count and capacity of the list.\n" +
                 "0 to exit this function.");
+            
             bool running = true;
-
-
             List<string> theList = new List<string>();
+
             while (running)
             {
                 string input = Console.ReadLine();
@@ -135,6 +135,36 @@ namespace SkalProj_Datastrukturer_Minne
              * Create a switch with cases to enqueue items or dequeue items
              * Make sure to look at the queue after Enqueueing and Dequeueing to see how it behaves
             */
+            bool running = true;
+            Queue<string> theQueue = new Queue<string>();
+
+            Console.WriteLine("String preceded by + sign adds to queue.\n" +
+                "- sign deques first item in queue. Even if you add more to the string it will be ignored.\n" +
+                "As you dequeue the exiting element will be returned.\n" +
+                "0 to exit this function.");
+
+            while (running)
+            {
+                string input = Console.ReadLine();
+                char nav = input[0];
+
+                switch(nav)
+                {
+                    case '+':
+                        theQueue.Enqueue(input.Substring(1));
+                        break;
+                    case '-':
+                        Console.WriteLine(theQueue.Dequeue());
+                        break;
+                    case '0':
+                        running = false;
+                        break;
+                    default:
+                        Console.WriteLine("+ or - to manipulate queue");
+                        break;
+                }
+            }
+
         }
 
         /// <summary>
