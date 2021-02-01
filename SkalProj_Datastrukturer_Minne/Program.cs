@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace SkalProj_Datastrukturer_Minne
 {
@@ -78,6 +79,50 @@ namespace SkalProj_Datastrukturer_Minne
             //string value = input.substring(1);
 
             //switch(nav){...}
+
+            Console.WriteLine("String preceded by + sign adds to list.\n" +
+                "String preceded by - removes that given string from it.\n" +
+                "In response you will know the count and capacity of the list.\n" +
+                "0 to exit this function.");
+            bool running = true;
+
+
+            List<string> theList = new List<string>();
+            while (running)
+            {
+                string input = Console.ReadLine();
+                char nav = input[0];
+                string value = input.Substring(1);
+
+                switch (nav)
+                {
+                    case '+':
+                        theList.Add(value);
+                        Console.WriteLine($"Count: {theList.Count}\nCapacity: {theList.Capacity}");
+                        break;
+                    case '-':
+                        theList.Remove(value);
+                        Console.WriteLine($"Count: {theList.Count}\nCapacity: {theList.Capacity}");
+                        break;
+                    case '0':
+                        running = false;
+                        break;
+                    default:
+                        Console.WriteLine("Only strings preceded by + or - operate the list");
+                        break;
+                }
+
+                /*
+                 * 2. Listans kapacitet ökar när listans storlek är större än nuvarande array.
+                 * 3. Arrayen har storlek 0 innan element läggs till. Med det första elementet får det storlek 4.
+                 * Efter det dubblerar arrayen i storlek varje gång kapaciteten överträffas.
+                 * 4. Eftersom enda sättet att öka storleken på en array är att kopiera innehållet till en ny med större kapacitet.
+                 * Det blir onödigt många minneshanteringar.
+                 * 5. Kapaciteten minskar aldrig.
+                 * 6. Array är fördelaktig när du vet att du kommer ha en fixerad storlek, eller om du vill ha bättre kontroll över när den ökar
+                 * i storlek. Sen så kan den också vara multi-dimensionell till skillnad från listor.
+                 */
+            }
         }
 
         /// <summary>
