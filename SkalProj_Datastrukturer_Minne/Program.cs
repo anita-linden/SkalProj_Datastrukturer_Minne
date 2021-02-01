@@ -222,6 +222,55 @@ namespace SkalProj_Datastrukturer_Minne
              * Example of correct: (()), {}, [({})],  List<int> list = new List<int>() { 1, 2, 3, 4 };
              * Example of incorrect: (()]), [), {[()}],  List<int> list = new List<int>() { 1, 2, 3, 4 );
              */
+            //1.En stack. Senast använda parentesstart är i stacken och tas bort när rätt slut anges.
+            //Vi returnerar fel om slutet inte matchar eller om stacken inte är tom när det är klart.
+            bool running = true;
+
+            Console.WriteLine("Input a series of parenthesis to check if valid. 0 to escape.");
+            while(running)
+            {
+                string input = Console.ReadLine();
+
+                if (input[0]=='0')
+                {
+                    running = false;
+                }
+                else
+                {
+                    bool valid = true;
+                    Stack<char> parenthesis = new Stack<char>();
+                    foreach (char ch in input)
+                    {
+                        switch (ch)
+                        {
+                            case '(':
+                            case '{':
+                            case '[':
+                                parenthesis.Push(ch);
+                                break;
+                            case ')':
+                                if (parenthesis.Pop() != '(')
+                                    valid = false;
+                                break;
+                            case '}':
+                                if (parenthesis.Pop() != '{')
+                                    valid = false;
+                                break;
+                            case ']':
+                                if (parenthesis.Pop() != '[')
+                                    valid = false;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+
+                    if (parenthesis.Count > 0)
+                        valid = false;
+
+                    Console.WriteLine(valid);
+                }
+            }
 
         }
 
