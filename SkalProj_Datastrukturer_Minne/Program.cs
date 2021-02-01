@@ -1,17 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
 
+//Delegat för att förkorta mängden metoder för att hantera iteration och fibonacci
+delegate int NumberMethod(int n);
+
 namespace SkalProj_Datastrukturer_Minne
 {
     class Program
     {
+        /*Teori och fakta
+         * 1. I stacken läggs nya funktioner på minnet när de startas och tas bort när de är klara. Variablerna städas undan med metodens
+         * slut. Heapen ligger kvar tills referensen till minnet tagits bort.
+         * 2. Value typer är direkta datatyper. Du anger dom ett värde och sedan pekar dom till detta värde. När de kopieras så kopieras
+         * värdet.
+         * Reference typer anger i stället en adress till en data, enskild eller grupp. Om du kopierar denna kopieras adressen, och alla
+         * kopior pekar till samma instans med data.
+         * 3. Den första är value typen int, så när du anger att y = x så kopierar du värdet från x, medans x förblir självständig.
+         * Den andra angerer reference typen MyInt, en klass, och då blir y=x en kopia av adressen och båda referar till samma instans av
+         * värdet. MyInt som y refererade till först har förlorat sin referens och kommer tas bort från minnet med garbage collection.
+        */
         /// <summary>
         /// The main method, vill handle the menues for the program
         /// </summary>
         /// <param name="args"></param>
         static void Main()
         {
-
             while (true)
             {
                 Console.WriteLine("Please navigate through the menu by inputting the number \n(1, 2, 3 ,4, 0) of your choice"
@@ -19,6 +32,10 @@ namespace SkalProj_Datastrukturer_Minne
                     + "\n2. Examine a Queue"
                     + "\n3. Examine a Stack"
                     + "\n4. CheckParanthesis"
+                    + "\n5. Recursive Even"
+                    + "\n6. Recursive Fibonacci"
+                    + "\n7. Iterative Even"
+                    + "\n8. Iterative Fibonacci"
                     + "\n0. Exit the application");
                 char input = ' '; //Creates the character input to be used with the switch-case below.
                 try
@@ -48,6 +65,18 @@ namespace SkalProj_Datastrukturer_Minne
                      * Extend the menu to include the recursive 
                      * and iterative exercises.
                      */
+                    case '5':
+                        CheckEven(new NumberMethod(RecursiveEven));
+                        break;
+                    case '6':
+                        CheckFibonacci(new NumberMethod(RecursiveFib));
+                        break;
+                    case '7':
+                        CheckEven(new NumberMethod(IterativeEven));
+                        break;
+                    case '8':
+                        CheckFibonacci(new NumberMethod(IterativeFib));
+                        break;
                     case '0':
                         Environment.Exit(0);
                         break;
@@ -274,6 +303,105 @@ namespace SkalProj_Datastrukturer_Minne
 
         }
 
+        static void CheckEven(NumberMethod method)
+        {
+            NumberMethod even = method;
+            bool running = true;
+
+            Console.WriteLine("Input number n that is 0 or more. You will get the nth even number starting from 0. Type e to escape.");
+
+            
+            while(running)
+            {
+                string input = Console.ReadLine();
+
+                if (input[0] == 'e')
+                    running = false;
+                else
+                {
+                    Console.WriteLine(even(int.Parse(input)));
+                }
+            }
+
+        }
+
+        static void CheckFibonacci(NumberMethod method)
+        {
+            NumberMethod fib = method;
+            bool running = true;
+
+            Console.WriteLine("Input number n that is 0 or more. You will get the nth number of the fibonacci sequence. Input e to escape.");
+
+            while (running)
+            {
+                string input = Console.ReadLine();
+
+                if (input[0] == 'e')
+                    running = false;
+                else
+                {
+                    Console.WriteLine(fib(int.Parse(input)));
+                }
+            }
+        }
+        //När det kommer till huruvida rekursion eller iteration använder mest minne så är det självklart rekursion.
+        //Rekursion lägger på nytt minne i stacken för varje rekursion av metoden och börjar inte ta bort dessa förrän den nått botten.
+        //Iteration å andra sidan hanterar å ena sidan samma variabler genom samma iteration, och interna variabler städas bort i slutet
+        //av varje iteration.
+        //Fördelen med rekursion är att det är snabbare, men inte så pass mycket att det särskilt ofta skulle vara bättre än iteration.
+        static int RecursiveEven(int n)
+        {
+            if (n==0)
+            {
+                return 2;
+            }
+
+            return RecursiveEven(n - 1) + 2;
+        }
+
+        static int RecursiveFib(int n)
+        {
+            if (n==0)
+            {
+                return 0;
+            }
+            else if (n==1)
+            {
+                return 1;
+            }
+            return RecursiveFib(n - 1) + RecursiveFib(n - 2);
+        }
+
+        static int IterativeEven(int n)
+        {
+            if (n == 0) return 2;
+
+            int result = 2;
+
+            for (int i = 1; i <= n; i++)
+            {
+                result += 2;
+            }
+
+            return result;
+        }
+
+        static int IterativeFib(int n)
+        {
+            if (n == 0) return 0;
+            else if (n == 1) return 1;
+
+            int result = 1;
+            int prevResult = 0;
+            for (int i = 2;i<=n;i++)
+            {
+                int temp = result;
+                result += prevResult;
+                prevResult = temp;
+            }
+
+            return result;
+        }
     }
 }
 
