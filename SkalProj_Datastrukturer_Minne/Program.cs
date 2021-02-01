@@ -177,6 +177,42 @@ namespace SkalProj_Datastrukturer_Minne
              * Create a switch with cases to push or pop items
              * Make sure to look at the stack after pushing and and poping to see how it behaves
             */
+
+            //antar att eftersom pdf-en inte säger något om kommentaren ovan så ska jag implementera metoden i pdf i stället för det
+
+            Console.WriteLine("Input a word, get it back reversed. 0 to exit.");
+
+            bool running = true;
+
+            while(running)
+            {
+                string input = Console.ReadLine();
+                Stack<char> reverse = new Stack<char>();
+
+                switch (input[0])
+                {
+                    case '0':
+                        running = false;
+                        break;
+                    default:
+                        break;
+                }
+
+                if(running)
+                {
+                    foreach (char ch in input)
+                    {
+                        reverse.Push(ch);
+                    }
+
+                    while (reverse.Count > 0)
+                    {
+                        Console.Write(reverse.Pop());
+                    }
+
+                    Console.Write("\n");
+                }
+            }
         }
 
         static void CheckParanthesis()
